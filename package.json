@@ -1,0 +1,11 @@
+{
+  "name": "stark-tech",
+  "version": "1.0.0",
+  "description": "A project for Stark Tech",
+  "main": "index.js",
+  "scripts": {
+    "start": "python3 -m http.server 8000"
+  },
+  "author": "Your Name",
+  "license": "ISC"
+}
