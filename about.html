@@ -79,7 +79,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-12" data-aos="fade-up">
                     <div class="md:w-1/2">
                         <div class="relative group">
-                            <img src="https://raw.githubusercontent.com/akatiomkar/portfolio/main/images/omkar.jpg" 
+                            <img src="https://i.postimg.cc/Tw781s4G/picofme-7.png" 
                                  alt="CEO of Stark Tech" 
                                  class="rounded-2xl shadow-xl w-full max-w-md mx-auto transform transition-transform duration-500 group-hover:scale-105">
                             <div class="absolute -bottom-4 -right-4 bg-accent p-4 rounded-lg transform transition-transform duration-500 group-hover:translate-x-2 group-hover:-translate-y-2">
@@ -94,11 +94,11 @@
                             As the CEO and Founder of Stark Tech, Omkar brings a passion for innovation and a deep understanding of modern technology solutions. His vision drives our commitment to delivering cutting-edge solutions that help businesses thrive in the digital age.
                         </p>
                         <div class="flex justify-center md:justify-start space-x-4">
-                            <a href="https://github.com/akatiomkar" target="_blank" rel="noopener noreferrer"
+                            <a href="github.com/Starktechfounder" target="_blank" rel="noopener noreferrer"
                                class="bg-gray-200 dark:bg-primary p-3 rounded-full text-gray-700 dark:text-light hover:bg-accent hover:text-white transition-all transform hover:scale-110">
                                 <i class="fab fa-github text-xl"></i>
                             </a>
-                            <a href="https://linkedin.com/in/akatiomkar" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.linkedin.com/in/akati-omkar-reddy-b3987735a" target="_blank" rel="noopener noreferrer"
                                class="bg-gray-200 dark:bg-primary p-3 rounded-full text-gray-700 dark:text-light hover:bg-accent hover:text-white transition-all transform hover:scale-110">
                                 <i class="fab fa-linkedin-in text-xl"></i>
                             </a>
@@ -281,10 +281,10 @@
                     <a href="mailto:starktechfounder@gmail.com" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
                         <i class="fas fa-envelope text-2xl"></i>
                     </a>
-                    <a href="https://github.com/akatiomkar" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                    <a href="github.com/Starktechfounder" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
                         <i class="fab fa-github text-2xl"></i>
                     </a>
-                    <a href="https://linkedin.com/in/akatiomkar" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                    <a href="linkedin.com/in/akati-omkar-reddy-b3987735a" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
                         <i class="fab fa-linkedin text-2xl"></i>
                     </a>
                 </div>
@@ -318,27 +318,12 @@
             }
         });
 
-        // Animate skill bars
-        function animateSkillBars() {
-            const skillBars = document.querySelectorAll('.skill-bar');
-            skillBars.forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                bar.style.width = width;
-            });
-        }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkillBars();
-                }
-            });
+        // Form submission handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
         });
-
-        const skillsSection = document.querySelector('.skill-bar');
-        if (skillsSection) {
-            observer.observe(skillsSection);
-        }
     </script>
 </body>
 </html>
