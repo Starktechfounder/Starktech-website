@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Stark Tech</title>
+    <meta name="description" content="Explore Stark Tech's portfolio of innovative projects in web and mobile development.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1F1F1F',
+                        accent: '#E94560',
+                        secondary: '#0F3460',
+                        light: '#F5F5F5',
+                        dark: '#121212'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light dark:bg-dark font-poppins">
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/95 dark:bg-primary/95 backdrop-blur-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-accent text-2xl font-bold">STARK TECH</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Home</a>
+                    <a href="about.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">About</a>
+                    <a href="projects.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Projects</a>
+                    <a href="contact.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-gray-800"></i>
+                        <i class="fas fa-sun hidden dark:block text-light"></i>
+                    </button>
+                </div>
+                <button class="md:hidden text-gray-800 dark:text-light">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Projects Hero Section -->
+    <section class="pt-32 pb-16 bg-white dark:bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-accent/10 to-transparent dark:from-accent/5"></div>
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 dark:text-light mb-6">Our Projects</h1>
+                <p class="text-xl text-gray-600 dark:text-light/80 leading-relaxed">
+                    Discover our innovative solutions and successful implementations across various domains.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Filters -->
+    <section class="py-8 bg-gray-50 dark:bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+                <button class="filter-btn active px-6 py-2 rounded-full bg-accent text-white hover:bg-accent/90 transition-colors"
+                        data-filter="all">All Projects</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-primary text-gray-700 dark:text-light hover:bg-accent hover:text-white dark:hover:bg-accent transition-colors"
+                        data-filter="web">Web Apps</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-primary text-gray-700 dark:text-light hover:bg-accent hover:text-white dark:hover:bg-accent transition-colors"
+                        data-filter="mobile">Mobile Apps</button>
+                <button class="filter-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-primary text-gray-700 dark:text-light hover:bg-accent hover:text-white dark:hover:bg-accent transition-colors"
+                        data-filter="ai">AI/ML</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="py-20 bg-gray-50 dark:bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Mental Health Chatbot Project -->
+                <div class="project-card" data-category="ai" data-aos="fade-up">
+                    <div class="bg-white dark:bg-primary rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                                 alt="Mental Health Chatbot Interface" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-semibold text-white mb-2">AI Mental Health Chatbot 🤖</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">React</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Node.js</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">NLP</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Hugging Face</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <p class="text-gray-600 dark:text-light/70">
+                                    An AI-powered chatbot providing confidential mental health support for adolescents, featuring personalized advice and resource sharing.
+                                </p>
+                                <div class="space-y-2">
+                                    <h4 class="font-semibold text-gray-800 dark:text-light">Key Features:</h4>
+                                    <ul class="text-gray-600 dark:text-light/70 space-y-1">
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-accent mr-2"></i>
+                                            Confidential Support System
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-accent mr-2"></i>
+                                            AI-Driven Personalized Advice
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-accent mr-2"></i>
+                                            Resource Sharing Network
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check text-accent mr-2"></i>
+                                            Enhanced Data Privacy
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mt-6">
+                                <a href="#" class="text-accent hover:text-accent/80 transition-colors flex items-center gap-2">
+                                    View Demo
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <div class="flex space-x-4">
+                                    <span class="text-gray-600 dark:text-light/70">
+                                        <i class="fas fa-code-branch mr-1"></i> Testing
+                                    </span>
+                                    <a href="#" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                                        <i class="fab fa-github text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- TODO App Project -->
+                <div class="project-card" data-category="mobile" data-aos="fade-up">
+                    <div class="bg-white dark:bg-primary rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                                 alt="TODO App Interface" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-semibold text-white mb-2">TODO App</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Flutter</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Node.js</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 dark:text-light/70 mb-4">A cross-platform task management app with Flutter frontend and Node.js + MongoDB backend.</p>
+                            <div class="flex justify-between items-center">
+                                <a href="#" class="text-accent hover:text-accent/80 transition-colors flex items-center gap-2">
+                                    Live Demo
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignment Avenue Project -->
+                <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white dark:bg-primary rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                                 alt="Assignment Avenue Platform" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-semibold text-white mb-2">Assignment Avenue</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">React</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Express</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">MongoDB</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 dark:text-light/70 mb-4">A platform connecting students with expert writers for academic assistance and collaboration.</p>
+                            <div class="flex justify-between items-center">
+                                <a href="#" class="text-accent hover:text-accent/80 transition-colors flex items-center gap-2">
+                                    View Project
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Attendance System -->
+                <div class="project-card" data-category="ai" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white dark:bg-primary rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
+                                 alt="Smart Attendance System Dashboard" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <h3 class="text-xl font-semibold text-white mb-2">Smart Attendance System</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">Python</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">OpenCV</span>
+                                    <span class="px-2 py-1 bg-accent/20 text-white rounded-full text-sm">TensorFlow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 dark:text-light/70 mb-4">Face-recognition-based attendance system with real-time analytics dashboard.</p>
+                            <div class="flex justify-between items-center">
+                                <a href="#" class="text-accent hover:text-accent/80 transition-colors flex items-center gap-2">
+                                    Learn More
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section class="py-20 bg-white dark:bg-primary">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-light text-center mb-12" data-aos="fade-up">Technologies We Use</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex flex-col items-center group">
+                    <i class="fab fa-react text-accent text-4xl mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-gray-800 dark:text-light font-semibold group-hover:text-accent transition-colors">React</h3>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <i class="fab fa-node-js text-accent text-4xl mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-gray-800 dark:text-light font-semibold group-hover:text-accent transition-colors">Node.js</h3>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <i class="fas fa-mobile-alt text-accent text-4xl mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-gray-800 dark:text-light font-semibold group-hover:text-accent transition-colors">Flutter</h3>
+                </div>
+                <div class="flex flex-col items-center group">
+                    <i class="fas fa-database text-accent text-4xl mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-gray-800 dark:text-light font-semibold group-hover:text-accent transition-colors">MongoDB</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-primary py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-accent text-2xl font-bold mb-4">STARK TECH</h3>
+                    <p class="text-gray-600 dark:text-light/70 max-w-md">Building the future with innovative technology solutions.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="mailto:starktechfounder@gmail.com" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/starktech" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/starktech" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-light/10 text-center">
+                <p class="text-gray-600 dark:text-light/50">&copy; 2024 Stark Tech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize AOS -->
+    <script>
+        AOS.init();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Check for saved theme preference, otherwise use system preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            
+            // Save preference
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+
+        // Project Filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-accent', 'text-white');
+                    btn.classList.add('bg-gray-200', 'dark:bg-primary', 'text-gray-700', 'dark:text-light');
+                });
+
+                // Add active class to clicked button
+                button.classList.remove('bg-gray-200', 'dark:bg-primary', 'text-gray-700', 'dark:text-light');
+                button.classList.add('bg-accent', 'text-white');
+
+                const filter = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
