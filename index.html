@@ -5,11 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stark Tech - Innovative Technology Solutions</title>
     <meta name="description" content="Stark Tech - Where innovation meets technology. We specialize in web development, mobile apps, and cloud solutions.">
+    <meta name="keywords" content="web development, mobile apps, cloud solutions, technology company, software development">
+    <meta name="author" content="Stark Tech">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Stark Tech - Innovative Technology Solutions">
+    <meta property="og:description" content="Where innovation meets technology. We build modern, efficient, and scalable solutions for the digital era.">
+    <meta property="og:image" content="https://your-domain.com/images/og-image.jpg">
+    <meta property="og:url" content="https://your-domain.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stark Tech - Innovative Technology Solutions">
+    <meta name="twitter:description" content="Where innovation meets technology. We build modern, efficient, and scalable solutions for the digital era.">
+    <meta name="twitter:image" content="https://your-domain.com/images/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Stark Tech",
+        "url": "https://your-domain.com",
+        "logo": "https://your-domain.com/images/logo.png",
+        "description": "Where innovation meets technology. We build modern, efficient, and scalable solutions for the digital era.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Your Street Address",
+            "addressLocality": "Nashik",
+            "addressRegion": "Maharashtra",
+            "postalCode": "422001",
+            "addressCountry": "IN"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9392288192",
+            "contactType": "customer service",
+            "email": "starktechfounder@gmail.com"
+        }
+    }
+    </script>
+    
+    <!-- Existing CSS and JS imports -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR-GA-ID');
+    </script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -40,6 +97,7 @@
                     <a href="index.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Home</a>
                     <a href="about.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">About</a>
                     <a href="projects.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Projects</a>
+                    <a href="blog.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Blog</a>
                     <a href="contact.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Contact</a>
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                         <i class="fas fa-moon dark:hidden text-gray-800"></i>
@@ -226,8 +284,37 @@
         </div>
     </footer>
 
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white dark:bg-primary p-6 rounded-lg shadow-xl flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p class="text-gray-800 dark:text-light">Loading...</p>
+        </div>
+    </div>
+
     <!-- Initialize AOS -->
     <script>
+        // Loading spinner functions
+        function showLoading() {
+            document.getElementById('loading-spinner').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').classList.add('hidden');
+        }
+
+        // Add loading state to all links
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (link.href && !link.href.startsWith('#')) {
+                    showLoading();
+                }
+            });
+        });
+
+        // Hide loading when page is fully loaded
+        window.addEventListener('load', hideLoading);
+
         AOS.init();
 
         // Theme Toggle

@@ -239,11 +239,100 @@
             }
         });
 
-        // Form submission handling
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        // Form submission handling with validation
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
+            
+            // Form validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Validation checks
+            if (!name || name.length < 2) {
+                alert('Please enter a valid name (at least 2 characters)');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            if (!subject || subject.length < 3) {
+                alert('Please enter a subject (at least 3 characters)');
+                return;
+            }
+            
+            if (!message || message.length < 10) {
+                alert('Please enter a message (at least 10 characters)');
+                return;
+            }
+
+            // Add loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': 'your-csrf-token' // Add CSRF protection
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        subject,
+                        message
+                    })
+                });
+
+                if (response.ok) {
+                    // Show success message with animation
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300';
+                    successMessage.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Message sent successfully!';
+                    document.body.appendChild(successMessage);
+                    
+                    // Animate in
+                    setTimeout(() => successMessage.classList.remove('translate-x-full'), 100);
+                    
+                    // Animate out after 3 seconds
+                    setTimeout(() => {
+                        successMessage.classList.add('translate-x-full');
+                        setTimeout(() => successMessage.remove(), 300);
+                    }, 3000);
+                    
+                    this.reset();
+                } else {
+                    throw new Error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Show error message with animation
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300';
+                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Error sending message. Please try again.';
+                document.body.appendChild(errorMessage);
+                
+                // Animate in
+                setTimeout(() => errorMessage.classList.remove('translate-x-full'), 100);
+                
+                // Animate out after 3 seconds
+                setTimeout(() => {
+                    errorMessage.classList.add('translate-x-full');
+                    setTimeout(() => errorMessage.remove(), 300);
+                }, 3000);
+            } finally {
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            }
         });
     </script>
 </body>

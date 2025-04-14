@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Stark Tech</title>
+    <meta name="description" content="Latest insights, tutorials, and updates from Stark Tech on technology, development, and innovation.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1F1F1F',
+                        accent: '#E94560',
+                        secondary: '#0F3460',
+                        light: '#F5F5F5',
+                        dark: '#121212'
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light dark:bg-dark font-poppins">
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/95 dark:bg-primary/95 backdrop-blur-sm">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-accent text-2xl font-bold">STARK TECH</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Home</a>
+                    <a href="about.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">About</a>
+                    <a href="projects.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Projects</a>
+                    <a href="blog.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Blog</a>
+                    <a href="contact.html" class="text-gray-800 dark:text-light hover:text-accent transition-colors">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-gray-800"></i>
+                        <i class="fas fa-sun hidden dark:block text-light"></i>
+                    </button>
+                </div>
+                <button class="md:hidden text-gray-800 dark:text-light">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="pt-32 pb-16 bg-white dark:bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-accent/10 to-transparent dark:from-accent/5"></div>
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 dark:text-light mb-6">Our Blog</h1>
+                <p class="text-xl text-gray-600 dark:text-light/80 leading-relaxed">
+                    Insights, tutorials, and updates from our team of experts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-20 bg-gray-50 dark:bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Blog Categories -->
+                <div class="md:col-span-1" data-aos="fade-right">
+                    <div class="bg-white dark:bg-primary p-8 rounded-xl shadow-lg sticky top-32">
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-light mb-6">Categories</h2>
+                        <div class="space-y-4">
+                            <a href="#" class="block text-gray-600 dark:text-light/70 hover:text-accent transition-colors">
+                                <i class="fas fa-code mr-2"></i> Web Development
+                            </a>
+                            <a href="#" class="block text-gray-600 dark:text-light/70 hover:text-accent transition-colors">
+                                <i class="fas fa-mobile-alt mr-2"></i> Mobile Development
+                            </a>
+                            <a href="#" class="block text-gray-600 dark:text-light/70 hover:text-accent transition-colors">
+                                <i class="fas fa-cloud mr-2"></i> Cloud Computing
+                            </a>
+                            <a href="#" class="block text-gray-600 dark:text-light/70 hover:text-accent transition-colors">
+                                <i class="fas fa-shield-alt mr-2"></i> Security
+                            </a>
+                            <a href="#" class="block text-gray-600 dark:text-light/70 hover:text-accent transition-colors">
+                                <i class="fas fa-lightbulb mr-2"></i> Innovation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Posts -->
+                <div class="md:col-span-2 space-y-8" data-aos="fade-left">
+                    <!-- Blog Post 1 -->
+                    <article class="bg-white dark:bg-primary p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="https://ui-avatars.com/api/?name=Akati+Omkar+Reddy&background=E94560&color=fff" alt="Author" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h3 class="text-gray-800 dark:text-light font-medium">Akati Omkar Reddy</h3>
+                                <p class="text-gray-600 dark:text-light/70 text-sm">April 14, 2024</p>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-light mb-4">The Future of Web Development</h2>
+                        <p class="text-gray-600 dark:text-light/70 mb-6">
+                            Exploring the latest trends and technologies shaping the future of web development...
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <a href="#" class="text-accent hover:text-accent/80 transition-colors">Read More →</a>
+                            <div class="flex space-x-2">
+                                <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">Web Dev</span>
+                                <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">Trends</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="bg-white dark:bg-primary p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <img src="https://ui-avatars.com/api/?name=Akati+Omkar+Reddy&background=E94560&color=fff" alt="Author" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h3 class="text-gray-800 dark:text-light font-medium">Akati Omkar Reddy</h3>
+                                <p class="text-gray-600 dark:text-light/70 text-sm">April 13, 2024</p>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 dark:text-light mb-4">Mobile App Development Best Practices</h2>
+                        <p class="text-gray-600 dark:text-light/70 mb-6">
+                            Essential tips and best practices for building high-quality mobile applications...
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <a href="#" class="text-accent hover:text-accent/80 transition-colors">Read More →</a>
+                            <div class="flex space-x-2">
+                                <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">Mobile</span>
+                                <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">Best Practices</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-accent">
+        <div class="container mx-auto px-6">
+            <div class="max-w-2xl mx-auto text-center" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-white mb-4">Subscribe to Our Newsletter</h2>
+                <p class="text-white/80 mb-8">Stay updated with our latest articles, tutorials, and company news.</p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Your email address" 
+                           class="flex-1 px-6 py-3 rounded-lg bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/20">
+                    <button type="submit" 
+                            class="px-8 py-3 bg-white text-accent rounded-lg font-medium hover:bg-white/90 transition-colors">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-primary py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-accent text-2xl font-bold mb-4">STARK TECH</h3>
+                    <p class="text-gray-600 dark:text-light/70 max-w-md">Building the future with innovative technology solutions.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="mailto:starktechfounder@gmail.com" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/Starktechfounder" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/akati-omkar-reddy-b3987735a" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-light hover:text-accent transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-light/10 text-center">
+                <p class="text-gray-600 dark:text-light/50">&copy; 2024 Stark Tech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize AOS -->
+    <script>
+        AOS.init();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+    </script>
+</body>
+</html> 
