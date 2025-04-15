@@ -1,0 +1,5 @@
+[33m0dc271226433eb98c0340d1b04f1232f6b73cda0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Update deployment configuration with explicit paths and Node version
+[33mdebb41a02edf9e66319aa0da8f63e1dfb4226f51[m Fix Render configuration and add root package.json
+[33m27464ef36570380c2767e0eeee4771a8777f7c4d[m Fix Render configuration and update package.json
+[33m3cf2f5a3860ab294bde2cf4fb9f4fcf8ebd4bd8c[m Add Render configuration for deployment
+[33mf8619ba35de3d8f3ace2dd2720aefd5456d3abc4[m Update MongoDB connection string in server.js
