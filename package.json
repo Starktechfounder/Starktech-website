@@ -1,12 +1,9 @@
 {
-  "name": "stark-tech",
+  "name": "starktech",
   "version": "1.0.0",
-  "description": "A project for Stark Tech",
-  "main": "index.js",
+  "description": "Stark Tech Website",
   "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
-  },
-  "author": "Your Name",
-  "license": "ISC"
+    "start": "cd backend && node server.js",
+    "install": "cd backend && npm install"
+  }
 }
