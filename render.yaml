@@ -2,11 +2,14 @@ services:
   - type: web
     name: starktech-web
     env: node
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && node server.js
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
     envVars:
       - key: MONGODB_URI
         value: mongodb+srv://starktechfounder:CAGqnheZY3UThOZU@cluster0.eieiv58.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       - key: PORT
         value: 10000
+      - key: NODE_VERSION
+        value: 18.15.0
     staticPublishPath: ../ 
