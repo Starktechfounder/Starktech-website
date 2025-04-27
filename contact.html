@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -28,6 +30,14 @@
                 }
             }
         }
+
+        // Initialize Supabase client
+        const supabaseUrl = 'https://zkjfebguvjayuckdqpqg.supabase.co'
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpramZlYmd1dmpheXVja2RxcHFnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NTMzNzIsImV4cCI6MjA2MTMyOTM3Mn0.7oA9xePGwvgGs4RdfVD766BMcKGKqyfy_kVeB82umuo'
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+
+        // Admin Authentication State
+        let isAdminAuthenticated = false;
     </script>
 </head>
 <body class="bg-light dark:bg-dark font-poppins">
@@ -216,7 +226,94 @@
         </div>
     </footer>
 
-    <!-- Initialize AOS -->
+    <!-- Admin Panel Modal -->
+    <div id="adminPanel" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-primary rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+            <!-- Admin Login Form -->
+            <div id="adminLogin" class="p-8">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-light mb-6">Admin Login</h2>
+                <form id="adminLoginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 dark:text-light mb-2">Password</label>
+                        <input type="password" id="adminPassword" 
+                            class="w-full px-4 py-2 rounded-lg border dark:bg-dark dark:text-light focus:outline-none focus:border-accent"
+                            required>
+                    </div>
+                    <button type="submit" 
+                        class="w-full bg-accent text-white py-2 rounded-lg hover:bg-accent/90 transition-colors">
+                        Login
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" class="hidden">
+                <!-- Dashboard Header -->
+                <div class="p-6 border-b dark:border-light/10 flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-light">Contact Submissions</h2>
+                    <button id="adminLogout" class="text-accent hover:text-accent/80">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="p-6 border-b dark:border-light/10 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" id="searchFilter" placeholder="Search by name or email" 
+                        class="px-4 py-2 rounded-lg border dark:bg-dark dark:text-light focus:outline-none focus:border-accent">
+                    <select id="statusFilter" 
+                        class="px-4 py-2 rounded-lg border dark:bg-dark dark:text-light focus:outline-none focus:border-accent">
+                        <option value="">All Statuses</option>
+                        <option value="received">Received</option>
+                        <option value="processed">Processed</option>
+                        <option value="responded">Responded</option>
+                    </select>
+                    <div class="flex gap-2">
+                        <button id="refreshData" class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90">
+                            <i class="fas fa-sync-alt mr-2"></i>Refresh
+                        </button>
+                        <button id="exportData" class="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90">
+                            <i class="fas fa-download mr-2"></i>Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 dark:bg-dark/50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Subject</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-light/70 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissionsTable" class="divide-y dark:divide-light/10">
+                            <!-- Data rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="p-6 border-t dark:border-light/10 flex justify-between items-center">
+                    <div class="text-sm text-gray-600 dark:text-light/70">
+                        Showing <span id="paginationInfo">0-0 of 0</span> entries
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="prevPage" class="px-4 py-2 rounded-lg border dark:border-light/20 disabled:opacity-50">
+                            Previous
+                        </button>
+                        <button id="nextPage" class="px-4 py-2 rounded-lg border dark:border-light/20 disabled:opacity-50">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         AOS.init();
 
@@ -249,9 +346,10 @@
             const subject = document.getElementById('subject').value.trim();
             const message = document.getElementById('message').value.trim();
             
-            // Validation checks
-            if (!name || name.length < 2) {
-                alert('Please enter a valid name (at least 2 characters)');
+            // Enhanced validation
+            const nameRegex = /^[a-zA-Z\s]{2,50}$/;
+            if (!nameRegex.test(name)) {
+                alert('Please enter a valid name (2-50 characters, letters only)');
                 return;
             }
             
@@ -261,15 +359,32 @@
                 return;
             }
             
-            if (!subject || subject.length < 3) {
-                alert('Please enter a subject (at least 3 characters)');
+            const subjectRegex = /^[a-zA-Z0-9\s\-_,.!?]{3,100}$/;
+            if (!subjectRegex.test(subject)) {
+                alert('Please enter a valid subject (3-100 characters)');
                 return;
             }
             
-            if (!message || message.length < 10) {
-                alert('Please enter a message (at least 10 characters)');
+            if (!message || message.length < 10 || message.length > 1000) {
+                alert('Please enter a message (10-1000 characters)');
                 return;
             }
+
+            // Store form data in localStorage
+            const formEntry = {
+                id: Date.now(),
+                name,
+                email,
+                subject,
+                message,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+
+            // Store in localStorage
+            const existingEntries = JSON.parse(localStorage.getItem('contactFormEntries') || '[]');
+            existingEntries.push(formEntry);
+            localStorage.setItem('contactFormEntries', JSON.stringify(existingEntries));
 
             // Add loading state
             const submitButton = this.querySelector('button[type="submit"]');
@@ -278,62 +393,401 @@
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
 
             try {
-                const response = await fetch('http://localhost:5000/api/contact', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': 'your-csrf-token' // Add CSRF protection
-                    },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        subject,
-                        message
-                    })
-                });
+                // Store in Supabase
+                const { data, error } = await supabase
+                    .from('contact_submissions')
+                    .insert([
+                        {
+                            name: name,
+                            email: email,
+                            subject: subject,
+                            message: message,
+                            status: 'received',
+                            submission_date: new Date().toISOString()
+                        }
+                    ]);
 
-                if (response.ok) {
-                    // Show success message with animation
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300';
-                    successMessage.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Message sent successfully!';
-                    document.body.appendChild(successMessage);
-                    
-                    // Animate in
-                    setTimeout(() => successMessage.classList.remove('translate-x-full'), 100);
-                    
-                    // Animate out after 3 seconds
-                    setTimeout(() => {
-                        successMessage.classList.add('translate-x-full');
-                        setTimeout(() => successMessage.remove(), 300);
-                    }, 3000);
-                    
-                    this.reset();
-                } else {
-                    throw new Error('Failed to send message');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                // Show error message with animation
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300';
-                errorMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Error sending message. Please try again.';
-                document.body.appendChild(errorMessage);
+                if (error) throw error;
+
+                // Update entry status in localStorage
+                const entries = JSON.parse(localStorage.getItem('contactFormEntries'));
+                const updatedEntries = entries.map(entry => 
+                    entry.id === formEntry.id ? {...entry, status: 'sent'} : entry
+                );
+                localStorage.setItem('contactFormEntries', JSON.stringify(updatedEntries));
+
+                showNotification('Message sent successfully!', 'success');
+                this.reset();
                 
-                // Animate in
-                setTimeout(() => errorMessage.classList.remove('translate-x-full'), 100);
-                
-                // Animate out after 3 seconds
+                // Prevent multiple submissions
+                submitButton.disabled = true;
                 setTimeout(() => {
-                    errorMessage.classList.add('translate-x-full');
-                    setTimeout(() => errorMessage.remove(), 300);
-                }, 3000);
+                    submitButton.disabled = false;
+                }, 5000);
+            } catch (error) {
+                console.error('Form submission error:', error);
+                
+                // Update entry status in localStorage
+                const entries = JSON.parse(localStorage.getItem('contactFormEntries'));
+                const updatedEntries = entries.map(entry => 
+                    entry.id === formEntry.id ? {...entry, status: 'failed'} : entry
+                );
+                localStorage.setItem('contactFormEntries', JSON.stringify(updatedEntries));
+
+                showNotification(error.message || 'Error sending message. Please try again.', 'error');
             } finally {
-                // Reset button state
                 submitButton.disabled = false;
                 submitButton.innerHTML = originalButtonText;
             }
         });
+
+        // Function to sync local entries with Supabase
+        async function syncWithSupabase() {
+            const entries = JSON.parse(localStorage.getItem('contactFormEntries') || '[]');
+            const failedEntries = entries.filter(entry => entry.status === 'failed');
+
+            for (const entry of failedEntries) {
+                try {
+                    const { data, error } = await supabase
+                        .from('contact_submissions')
+                        .insert([
+                            {
+                                name: entry.name,
+                                email: entry.email,
+                                subject: entry.subject,
+                                message: entry.message,
+                                status: 'received',
+                                submission_date: entry.timestamp
+                            }
+                        ]);
+
+                    if (error) throw error;
+
+                    // Update entry status in localStorage
+                    const updatedEntries = entries.map(e => 
+                        e.id === entry.id ? {...e, status: 'sent'} : e
+                    );
+                    localStorage.setItem('contactFormEntries', JSON.stringify(updatedEntries));
+                } catch (error) {
+                    console.error('Error syncing entry:', error);
+                }
+            }
+        }
+
+        // Function to view Supabase entries
+        async function viewSupabaseEntries() {
+            try {
+                const { data, error } = await supabase
+                    .from('contact_submissions')
+                    .select('*')
+                    .order('submission_date', { ascending: false });
+
+                if (error) throw error;
+
+                console.table(data);
+                return data;
+            } catch (error) {
+                console.error('Error fetching Supabase entries:', error);
+                return [];
+            }
+        }
+
+        // Add function to view stored entries
+        function viewStoredEntries() {
+            const entries = JSON.parse(localStorage.getItem('contactFormEntries') || '[]');
+            console.table(entries);
+            return entries;
+        }
+
+        // Add function to clear stored entries
+        function clearStoredEntries() {
+            localStorage.removeItem('contactFormEntries');
+            console.log('All stored entries have been cleared');
+        }
+
+        // Add function to get entries by status
+        function getEntriesByStatus(status) {
+            const entries = JSON.parse(localStorage.getItem('contactFormEntries') || '[]');
+            return entries.filter(entry => entry.status === status);
+        }
+
+        // Utility function for showing notifications
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>${message}`;
+            document.body.appendChild(notification);
+            
+            requestAnimationFrame(() => {
+                notification.classList.remove('translate-x-full');
+            });
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Admin Panel Configuration
+        const ADMIN_PASSWORD_HASH = 'YOUR_HASHED_PASSWORD'; // Replace with a properly hashed password
+        const PAGE_SIZE = 10;
+        let currentPage = 0;
+        let totalEntries = 0;
+        let currentFilters = {
+            search: '',
+            status: '',
+            page: 0
+        };
+
+        // Admin Authentication Functions
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
+
+        async function authenticateAdmin(password) {
+            const hashedPassword = await hashPassword(password);
+            if (hashedPassword === ADMIN_PASSWORD_HASH) {
+                isAdminAuthenticated = true;
+                Cookies.set('adminAuth', hashedPassword, { expires: 1, secure: true });
+                return true;
+            }
+            return false;
+        }
+
+        function checkAdminAuth() {
+            const storedAuth = Cookies.get('adminAuth');
+            return storedAuth === ADMIN_PASSWORD_HASH;
+        }
+
+        // Admin Panel UI Functions
+        function showAdminPanel() {
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('flex');
+            
+            if (checkAdminAuth()) {
+                showAdminDashboard();
+            } else {
+                showAdminLogin();
+            }
+        }
+
+        function hideAdminPanel() {
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('flex');
+        }
+
+        function showAdminLogin() {
+            document.getElementById('adminLogin').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('adminLogin').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+            loadSubmissions();
+        }
+
+        // Data Loading and Filtering
+        async function loadSubmissions() {
+            try {
+                let query = supabase
+                    .from('contact_submissions')
+                    .select('*', { count: 'exact' });
+
+                // Apply filters
+                if (currentFilters.search) {
+                    query = query.or(`name.ilike.%${currentFilters.search}%,email.ilike.%${currentFilters.search}%`);
+                }
+                if (currentFilters.status) {
+                    query = query.eq('status', currentFilters.status);
+                }
+
+                // Apply pagination
+                const from = currentPage * PAGE_SIZE;
+                const to = from + PAGE_SIZE - 1;
+                query = query
+                    .order('submission_date', { ascending: false })
+                    .range(from, to);
+
+                const { data, error, count } = await query;
+
+                if (error) throw error;
+
+                totalEntries = count;
+                updatePaginationInfo();
+                renderSubmissions(data);
+            } catch (error) {
+                console.error('Error loading submissions:', error);
+                showNotification('Error loading submissions', 'error');
+            }
+        }
+
+        function renderSubmissions(submissions) {
+            const tbody = document.getElementById('submissionsTable');
+            tbody.innerHTML = '';
+
+            submissions.forEach(submission => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50 dark:hover:bg-dark/50';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-light/70">
+                        ${new Date(submission.submission_date).toLocaleString()}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-light">
+                        ${submission.name}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-light">
+                        ${submission.email}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-light">
+                        ${submission.subject}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full ${getStatusClass(submission.status)}">
+                            ${submission.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="viewSubmission(${submission.id})" class="text-accent hover:text-accent/80 mr-2">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button onclick="updateStatus(${submission.id})" class="text-secondary hover:text-secondary/80">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function getStatusClass(status) {
+            const classes = {
+                received: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+                processed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+                responded: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+            };
+            return classes[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+        }
+
+        function updatePaginationInfo() {
+            const start = currentPage * PAGE_SIZE + 1;
+            const end = Math.min((currentPage + 1) * PAGE_SIZE, totalEntries);
+            document.getElementById('paginationInfo').textContent = `${start}-${end} of ${totalEntries}`;
+            
+            document.getElementById('prevPage').disabled = currentPage === 0;
+            document.getElementById('nextPage').disabled = end >= totalEntries;
+        }
+
+        // Event Listeners
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            if (await authenticateAdmin(password)) {
+                showAdminDashboard();
+            } else {
+                showNotification('Invalid password', 'error');
+            }
+        });
+
+        document.getElementById('adminLogout').addEventListener('click', () => {
+            isAdminAuthenticated = false;
+            Cookies.remove('adminAuth');
+            showAdminLogin();
+        });
+
+        document.getElementById('searchFilter').addEventListener('input', debounce((e) => {
+            currentFilters.search = e.target.value;
+            currentPage = 0;
+            loadSubmissions();
+        }, 300));
+
+        document.getElementById('statusFilter').addEventListener('change', (e) => {
+            currentFilters.status = e.target.value;
+            currentPage = 0;
+            loadSubmissions();
+        });
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                loadSubmissions();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if ((currentPage + 1) * PAGE_SIZE < totalEntries) {
+                currentPage++;
+                loadSubmissions();
+            }
+        });
+
+        document.getElementById('refreshData').addEventListener('click', () => {
+            loadSubmissions();
+        });
+
+        document.getElementById('exportData').addEventListener('click', async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('contact_submissions')
+                    .select('*')
+                    .order('submission_date', { ascending: false });
+
+                if (error) throw error;
+
+                const csv = convertToCSV(data);
+                downloadCSV(csv, 'contact_submissions.csv');
+            } catch (error) {
+                console.error('Error exporting data:', error);
+                showNotification('Error exporting data', 'error');
+            }
+        });
+
+        // Utility Functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function convertToCSV(arr) {
+            const array = [Object.keys(arr[0])].concat(arr);
+            return array.map(row => {
+                return Object.values(row)
+                    .map(val => `"${val}"`)
+                    .join(',');
+            }).join('\n');
+        }
+
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Add admin button to the navigation
+        const nav = document.querySelector('nav .flex.items-center.justify-between div:last-child');
+        const adminButton = document.createElement('button');
+        adminButton.className = 'text-gray-800 dark:text-light hover:text-accent transition-colors';
+        adminButton.innerHTML = '<i class="fas fa-lock mr-2"></i>Admin';
+        adminButton.onclick = showAdminPanel;
+        nav.insertBefore(adminButton, nav.lastElementChild);
     </script>
 </body>
 </html>
